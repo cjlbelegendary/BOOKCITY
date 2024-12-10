@@ -133,6 +133,7 @@
 }
 
     </style>
+    <script url="../static/assets/javascripts/functions.js"></script>
 </head>
 <body>
     <div class="wrapper">
@@ -203,7 +204,7 @@
                         </td>
                     <td class="action-buttons">
                             <form action="/delete" method="post">
-                                <input type="submit" name="delete" value="删除" onclick="window.alert('删除成功')">
+                                <input type="submit" name="delete" value="删除" onclick="conf_del()">
                                 <input type="hidden" name="id" value="{{ result[0] }}">
                             </form>
                         </td>
