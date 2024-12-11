@@ -24,8 +24,6 @@ def login_fail():
 @app.route('/login',methods=['GET','POST'])
 def login():
     if request.method == 'POST':
-        # results = request.form
-        # return render_template('test.html',results=results)
         username = request.form['username']
         password = request.form['password']
         conn = get_db_connection()
