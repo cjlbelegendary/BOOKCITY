@@ -11,7 +11,7 @@ app.secret_key = 'mykey'
 def get_db_connection():
     db = pymysql.connect(host='localhost',
                          user='root',
-                         password='root',
+                         password='Cjl202200202127==',
                          database='bookstore',
                          charset='utf8')
     print('连接数据库成功')
@@ -272,5 +272,5 @@ def back_to_insert():
     return render_template('insert.html')
 
 if __name__ == '__main__':
-    # app.run(host="0.0.0.0", port=5000, debug=True)
-    app.run(debug=True)
+    app.run(host="0.0.0.0", port=5000, debug=True)
+    # app.run(debug=True)

@@ -6,7 +6,7 @@ class Mysql(object):
             self.db = pymysql.connect(
                 host="localhost",
                 user="root",
-                password="root",
+                password="Cjl202200202127==",
                 database="bookstore")
             # 游标对象
             self.cursor = self.db.cursor()
