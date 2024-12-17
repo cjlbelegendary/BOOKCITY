@@ -3,8 +3,6 @@ from flask import Flask, render_template, redirect, url_for, request, flash, g
 from sql_init import Mysql
 
 app = Flask(__name__)
-app.secret_key = 'mykey'
-
 
 @app.route('/')  # 登录页
 def index():
