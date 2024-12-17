@@ -6,12 +6,16 @@ from flask import Flask
 
 class Mysql(object):
     def __init__(self):
+        host = os.environ.get('MYSQL_HOST', 'mysql_server')  # 如果环境变量MYSQL_HOST不存在，默认使用'mysql_server'
+        user = os.environ.get('MYSQL_USER', 'root')
+        password = os.environ.get('MYSQL_PWD', 'Cjl202200202127==')
+        database = os.environ.get('MYSQL_DB', 'bookstore')
         try:
             self.db = pymysql.connect(
-                host="localhost",
-                user="root",
-                password="Cjl202200202127==",
-                database="bookstore")
+                host=host,
+                user=user,
+                password=password,
+                database=database)
             # 游标对象
             self.cursor = self.db.cursor()
             print("连接成功！")
