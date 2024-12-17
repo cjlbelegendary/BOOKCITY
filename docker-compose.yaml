@@ -12,6 +12,7 @@ services:
       MYSQL_DB: bookstore
       MYSQL_USER: root
       MYSQL_PWD: Cjl202200202127==
+      MYSQL_PORT: 3306
 
   mysql_server:
     build: ./mysql
