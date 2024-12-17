@@ -1,4 +1,4 @@
-FROM python:3.13.1-bookwarm
+FROM python:3.13.1
 WORKDIR /app
 COPY . /app
 RUN pip3 install --no-cache-dir -r requirements.txt
