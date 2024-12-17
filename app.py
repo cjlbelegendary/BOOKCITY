@@ -1,21 +1,9 @@
 import ast
-from flask import Flask, render_template, redirect, url_for, request, flash
-import pymysql
+from flask import Flask, render_template, redirect, url_for, request, flash, g
 from sql_init import Mysql
-from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
 app.secret_key = 'mykey'
-
-
-def get_db_connection():
-    db = pymysql.connect(host='localhost',
-                         user='root',
-                         password='Cjl202200202127==',
-                         database='bookstore',
-                         charset='utf8')
-    print('连接数据库成功')
-    return db
 
 
 @app.route('/')  # 登录页
@@ -33,22 +21,13 @@ def login():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-        conn = get_db_connection()
-        cursor = conn.cursor(pymysql.cursors.DictCursor)
-        cursor.execute('SELECT * FROM users WHERE username = %s', (username))
-        user = cursor.fetchone()
-        cursor.execute('SELECT type FROM users WHERE username = %s', (username))
-        type = cursor.fetchone()
-        print('type=')
-        print(type)
-        cursor.close()
-        conn.close()
-        print(user)
-        if user:
-            if user['password'] == password:
-                if type['type'] == 'admin':
+        db = Mysql()
+        userinfo = db.login(username)
+        if userinfo:
+            if userinfo['password'] == password:
+                if userinfo['type'] == 'admin':
                     return render_template('admin.html')
-                elif type['type'] == 'user':
+                elif userinfo['type'] == 'user':
                     return render_template('user.html')
 
             else:
@@ -72,31 +51,30 @@ def register():
         username = request.form['username']
         password = request.form['password']
         usertype = request.form['type']
-        # password_hash=generate_password_hash(password)
-        conn = get_db_connection()
-        cursor = conn.cursor()
-        cursor.execute('SELECT * FROM users WHERE username = %s', (username))
-        user = cursor.fetchone()
-        if user:
+        db=Mysql()
+        if db.is_user_exist(username):
             return render_template('register_fail.html')
         else:
-            cursor.execute('INSERT INTO users (username,password,type) VALUES(%s, %s, %s)',
-                           (username, password, usertype))
-        conn.commit()
-        cursor.close()
-        conn.close()
+            db.register(username, password, usertype)
         return redirect(url_for('register_success'))
-        # return redirect(url_for('/login'))
     return render_template('login.html')
 
 
+# @app.before_request
+# def before_request():
+#     g.user=None
+
 @app.route('/admin')  # 登录页
 def admin():
+    # if not g.user:
+    #     return redirect(url_for('login'))
     return render_template('admin.html')
 
 
 @app.route('/user')  # 登录页
 def user():
+    if not g.user:
+        return redirect(url_for('login'))
     return render_template('user.html')
 
 
@@ -272,5 +250,5 @@ def back_to_insert():
     return render_template('insert.html')
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    app.run(host="0.0.0.0", port=8080, debug=True)
     # app.run(debug=True)

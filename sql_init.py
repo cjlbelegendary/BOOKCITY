@@ -1,5 +1,9 @@
 import ast
 import pymysql
+import os
+from flask import Flask
+
+
 class Mysql(object):
     def __init__(self):
         try:
@@ -13,6 +17,23 @@ class Mysql(object):
             print("连接成功！")
         except:
             print("连接失败！")
+
+    def login(self, username):
+        self.cursor=self.db.cursor(cursor=pymysql.cursors.DictCursor)
+        sql = 'SELECT * FROM users WHERE username = %s'
+        self.cursor.execute(sql, (username))
+        userinfo = self.cursor.fetchone()
+        return userinfo
+
+    def is_user_exist(self, username):
+        sql='SELECT * FROM users WHERE username = %s'
+        self.cursor.execute(sql, (username))
+        results = self.cursor.fetchone()
+        return results
+
+    def register(self,username,password,type):
+        sql='INSERT INTO users (username,password,type) VALUES(%s, %s, %s)'
+        self.cursor.execute(sql, (username, password, type))
 
     # 查询数据函数
     def getdata(self):
