@@ -21,7 +21,7 @@ SET time_zone = "+00:00";
 --
 -- 数据库： `bookstore`
 --
-CREATE DATABASE bookstore;
+CREATE DATABASE [IF NOT EXISTS] bookstore;
 USE bookstore;
 -- --------------------------------------------------------
 
@@ -72,20 +72,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`username`, `password`, `type`) VALUES
-('admin1', '123', 'admin'),
-('aaa', '123', 'admin'),
-('xxx', '123', 'user'),
-('userA', '123', 'admin'),
 ('user', '123', 'user'),
-('i_am_a_user', '123', 'user'),
-('adminsadsad', '123', 'admin'),
-('haha', '123', 'admin'),
-('adminbbb', '123', 'admin'),
-('admin', '123', 'admin'),
-('user1', '123', 'user'),
-('admin111', '123', 'admin'),
-('user11', '123', 'user'),
-('testuser', '123', 'admin');
+('admin', '123', 'admin');
 
 --
 -- 转储表的索引
