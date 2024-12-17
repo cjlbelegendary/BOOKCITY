@@ -13,6 +13,8 @@ services:
       MYSQL_USER: root
       MYSQL_PWD: Cjl202200202127==
       MYSQL_PORT: 3306
+    networks:
+      - mynet
 
   mysql_server:
     build: ./mysql
@@ -23,6 +25,10 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: Cjl202200202127==
       MYSQL_DATABASE: bookstore
-
+    networks:
+      - mynet
+networks:
+  mynet:
+    driver: bridge
 
 
